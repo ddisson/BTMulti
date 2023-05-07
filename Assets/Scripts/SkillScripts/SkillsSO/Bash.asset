@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abbbb5d50a9bd4a6d9150da82de11c7d, type: 3}
+  m_Name: Bash
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillClass: 1
+  description: Mighty bow that disintegrate opponent
+  skillIcon: {fileID: 0}
+  skillType: 0
+  APCost: 2
+  cd: 2
+  numberOfTargets: 1
+  leveleRequirements: 2
+  damageModifier: 1.5
