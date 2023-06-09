@@ -6,12 +6,12 @@ using UnityEngine;
 public class NaturalResistance: PassiveSkill
 {
 
-
-    public override void EffectPassiveTargeted(Titan titan)
-    {
-        titan.armor.AddModifier(titan.strValue);
-        //add event in add str add
-        Debug.Log("I got bonus from Natural Resistance");
-    }
+    ////timely stopped
+    //public override void EffectPassiveTargeted(Titan titan)
+    //{
+    //    titan.armor.AddModifier(titan.strValue);
+    //    //add event in add str add
+    //    Debug.Log("I got bonus from Natural Resistance");
+    //}
 
 }

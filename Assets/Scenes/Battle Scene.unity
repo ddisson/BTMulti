@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 133789929}
   - component: {fileID: 133789928}
   - component: {fileID: 133789930}
+  - component: {fileID: 133789931}
   m_Layer: 5
   m_Name: EnemyPosition
   m_TagString: Untagged
@@ -488,6 +489,28 @@ MonoBehaviour:
   nameText: {fileID: 867002340}
   hpSlider: {fileID: 811304120333755440}
   hpText: {fileID: 102160362}
+--- !u!114 &133789931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133789926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &140626733
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +523,7 @@ GameObject:
   - component: {fileID: 140626734}
   - component: {fileID: 140626736}
   - component: {fileID: 140626737}
+  - component: {fileID: 140626738}
   m_Layer: 0
   m_Name: Battle System
   m_TagString: Untagged
@@ -578,28 +602,6 @@ MonoBehaviour:
   blockList: []
   enemyAttackList: []
   enemyBlockList: []
-  attackingSkillList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  blockingSkillList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &140626735
 Transform:
   m_ObjectHideFlags: 0
@@ -642,6 +644,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f013705ab615f472899d13d782b6cae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &140626738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140626733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8606f8f6898b49348ce777b1b2c6acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
+  photonView: {fileID: 0}
+  playerPrefab: {fileID: 434969715711729450, guid: 88e598e6896634fc89a95c866a76452f, type: 3}
+  enemyPrefab: {fileID: 0}
+  enemyPosition: {fileID: 133789927}
+  playerPosition: {fileID: 142487036}
+  playerTitan: {fileID: 0}
+  enemyTitan: {fileID: 0}
+  titanPrefabNames:
+  - Player
+  - Enemy
+  playerID: 1
+  playerHud: {fileID: 142487039}
+  enemyHud: {fileID: 133789930}
+  skillButtons:
+  - {fileID: 728864092}
+  - {fileID: 1520200099}
+  - {fileID: 1161286180}
+  - {fileID: 620131399}
 --- !u!1 &141874069
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +788,7 @@ GameObject:
   - component: {fileID: 142487038}
   - component: {fileID: 142487037}
   - component: {fileID: 142487039}
+  - component: {fileID: 142487040}
   m_Layer: 5
   m_Name: PlayerPosition
   m_TagString: Untagged
@@ -838,6 +872,29 @@ MonoBehaviour:
   nameText: {fileID: 800502989}
   hpSlider: {fileID: 963586312}
   hpText: {fileID: 40781495}
+--- !u!114 &142487040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142487035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &282140547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1879,7 @@ GameObject:
   - component: {fileID: 800502988}
   - component: {fileID: 800502990}
   - component: {fileID: 800502989}
+  - component: {fileID: 800502991}
   m_Layer: 5
   m_Name: PlayerName
   m_TagString: Untagged
@@ -1946,6 +2004,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800502987}
   m_CullTransparentMesh: 1
+--- !u!114 &800502991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800502987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &867002338
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3137,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175254117}
   m_CullTransparentMesh: 1
+--- !u!1 &1470982340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4493370841858741494, guid: 0186aa1da811b492e8753352214cd6c5, type: 3}
+  m_PrefabInstance: {fileID: 963586310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1470982344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470982340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1503588107
 GameObject:
   m_ObjectHideFlags: 0

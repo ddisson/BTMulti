@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1498712744833559845}
   - component: {fileID: 1498712744833559844}
+  - component: {fileID: -7833030758625984221}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1498712744833559847}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 60}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.69, y: 0.69, z: 0.69}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6546548099570047290}
   m_Father: {fileID: 0}
@@ -45,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b97e0429d0cd43e08abef963ff65983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titanName: 
+  photonView: {fileID: 0}
+  titanName: Zombie
   gender: Male
   titanClass: {fileID: 11400000, guid: e32992961986b4560a2765e99a512cea, type: 2}
   image: {fileID: 21300000, guid: 3ac9aa5b153d946dbba4d8163d592654, type: 3}
@@ -53,34 +55,40 @@ MonoBehaviour:
   xp: 0
   maxHP: 100
   currentHP: 100
-  str:
-    basicValue: 30
-    finalValue: 0
-  dex:
-    basicValue: 20
-    finalValue: 0
-  vit:
-    basicValue: 40
-    finalValue: 0
-  strValue: 0
-  dexValue: 0
-  vitValue: 0
+  strength: 15
+  dexterity: 5
+  vitality: 10
   skills:
   - {fileID: 11400000, guid: 46bf027c978f840dc95bc006fdc14bf8, type: 2}
   - {fileID: 11400000, guid: 5ce736cdbcd41435bb0f5ffdc8af2cd3, type: 2}
-  armor:
-    basicValue: 0
-    finalValue: 0
-  armorValue: 0
-  damage:
-    basicValue: 0
-    finalValue: 0
-  damageBasicValue: 0
-  damageMinValue: 0
-  damageMaxValue: 0
+  damage: 0
+  armor: 0
   equipment: []
   weapon: {fileID: 0}
-  shieled: {fileID: 0}
+  shield: {fileID: 0}
+--- !u!114 &-7833030758625984221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498712744833559847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1498712744833559844}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3166386910997705804
 GameObject:
   m_ObjectHideFlags: 0
