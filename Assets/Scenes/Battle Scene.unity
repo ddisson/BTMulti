@@ -735,20 +735,20 @@ MonoBehaviour:
   - {fileID: 1161286180}
   - {fileID: 620131399}
   attackBodyPartButtons:
-  - {fileID: 2073838298}
-  - {fileID: 1662255464}
-  - {fileID: 1710512196}
-  - {fileID: 1094322120}
-  - {fileID: 739463484}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   defendBodyPartButtons:
-  - {fileID: 1332888332}
-  - {fileID: 1917654168}
-  - {fileID: 1906826251}
-  - {fileID: 961564880}
-  - {fileID: 769315979}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cancelButtonPrefab: {fileID: 2009885978136570602, guid: aad1c73766f2a437caf8624d1dde5bf6, type: 3}
   cancelButtonParent: {fileID: 1043439441}
-  confirmButton: {fileID: 0}
+  confirmButton: {fileID: 963237229}
   chosenActions: []
   titansAssigned: 0
   playerTitan: {fileID: 0}
@@ -760,7 +760,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140626733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa436980b45540159935ba4d537ec85, type: 3}
   m_Name: 
@@ -1460,8 +1460,32 @@ MonoBehaviour:
   player2Prefab: {fileID: 0}
   enemyPosition: {fileID: 133789927}
   playerPosition: {fileID: 142487036}
-  clientID: 1
+  clientID: 2
   targeting: {fileID: 140626739}
+  player1AttackButtons:
+  - {fileID: 2073838298}
+  - {fileID: 1917654168}
+  - {fileID: 1906826251}
+  - {fileID: 961564880}
+  - {fileID: 769315979}
+  player1DefendButtons:
+  - {fileID: 1723438429}
+  - {fileID: 1662255464}
+  - {fileID: 1710512196}
+  - {fileID: 1094322120}
+  - {fileID: 739463484}
+  player2AttackButtons:
+  - {fileID: 1723438429}
+  - {fileID: 1662255464}
+  - {fileID: 1710512196}
+  - {fileID: 1094322120}
+  - {fileID: 739463484}
+  player2DefendButtons:
+  - {fileID: 2073838298}
+  - {fileID: 1917654168}
+  - {fileID: 1906826251}
+  - {fileID: 961564880}
+  - {fileID: 769315979}
 --- !u!114 &468559867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3752,17 +3776,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175254117}
   m_CullTransparentMesh: 1
---- !u!114 &1332888332 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5626694116401829316, guid: 2a9d3f87014614d3c94b30f9d28e4cb6, type: 3}
-  m_PrefabInstance: {fileID: 1993513256}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1470982340 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4493370841858741494, guid: 0186aa1da811b492e8753352214cd6c5, type: 3}

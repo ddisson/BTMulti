@@ -15,6 +15,8 @@ public class SerializableAction
 
 public class NewTargeting : MonoBehaviour
 {
+    public static NewTargeting instance;
+
     private PhotonView photonView;
 
     private List<Action> masterClientActions;
@@ -28,6 +30,8 @@ public class NewTargeting : MonoBehaviour
     public Transform cancelButtonParent;
 
     public Button confirmButton;
+    private bool masterClientConfirmed = false;
+    private bool otherPlayerConfirmed = false;
 
     private SkillSO currentSkill;
     private Action currentAction;
@@ -45,6 +49,16 @@ public class NewTargeting : MonoBehaviour
     private void Awake()
     {
 
+        Debug.Log("NewTargeting instance created.");  // Add this line
+
+        if (instance != null)
+        {
+            Debug.LogError("More than one instance of NewTargeting found!");
+            return;
+        }
+        instance = this;
+
+
         // Get the PhotonView component
         photonView = GetComponent<PhotonView>();
 
@@ -56,18 +70,23 @@ public class NewTargeting : MonoBehaviour
         otherPlayerActions = new List<Action>();
 
         FightCalc fightCalc = GetComponent<FightCalc>();  // Assuming FightCalc is on the same GameObject
+
+
+    }
+
+    public void Initialize(Button[] attackBodyPartButtons, Button[] defendBodyPartButtons)
+    {
+        this.attackBodyPartButtons = attackBodyPartButtons;
+        this.defendBodyPartButtons = defendBodyPartButtons;
     }
 
     void Update()
     {
-        if (!titansAssigned)
+        // Check if the Titan has been assigned to this player.
+        if (!titansAssigned && playerTitan != null)
         {
-            if (GameManager.instance.clientID == 1 && BattleSet.instance.playerTitan != null)
-            {
-                playerTitan = BattleSet.instance.playerTitan;
-                titansAssigned = true;
-                startScript();
-            }
+            titansAssigned = true;
+            startScript();
         }
     }
 
@@ -114,9 +133,20 @@ public class NewTargeting : MonoBehaviour
             // Add target to the current action
             currentAction.targets.Add(target);
 
+            // Decide which set of buttons to use based on the action type
+            Button[] actionButtons;
+            if (actionType == ActionType.Attack)
+            {
+                actionButtons = attackBodyPartButtons;
+            }
+            else // ActionType.Block
+            {
+                actionButtons = defendBodyPartButtons;
+            }
+
             // Create a new GameObject to hold the image
             GameObject newImage = new GameObject(currentSkill.skillName);
-            newImage.transform.SetParent(attackBodyPartButtons[(int)target].transform, false);
+            newImage.transform.SetParent(actionButtons[(int)target].transform, false);
 
             // Add the Image component and set it to the skill's icon
             Image newImageComponent = newImage.AddComponent<Image>();
@@ -130,19 +160,18 @@ public class NewTargeting : MonoBehaviour
             rectTransform.offsetMin = new Vector2(0, 0);
             rectTransform.offsetMax = new Vector2(0, 0);
 
-            GridLayoutGroup grid = attackBodyPartButtons[(int)target].GetComponentInChildren<GridLayoutGroup>();
+            GridLayoutGroup grid = actionButtons[(int)target].GetComponentInChildren<GridLayoutGroup>();
             if (grid == null)
             {
-                grid = attackBodyPartButtons[(int)target].gameObject.AddComponent<GridLayoutGroup>();
+                grid = actionButtons[(int)target].gameObject.AddComponent<GridLayoutGroup>();
             }
 
             int maxPerRow = 2;
-            // This line is changed: now we're getting the child count of the button
-            int rows = (attackBodyPartButtons[(int)target].transform.childCount - 1) / maxPerRow + 1;
+            int rows = (actionButtons[(int)target].transform.childCount - 1) / maxPerRow + 1;
             grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             grid.constraintCount = maxPerRow;
-            grid.cellSize = new Vector2(attackBodyPartButtons[(int)target].GetComponent<RectTransform>().rect.width / maxPerRow,
-                                        attackBodyPartButtons[(int)target].GetComponent<RectTransform>().rect.height / rows);
+            grid.cellSize = new Vector2(actionButtons[(int)target].GetComponent<RectTransform>().rect.width / maxPerRow,
+                                        actionButtons[(int)target].GetComponent<RectTransform>().rect.height / rows);
 
             // Store the image with the action so we can delete it later
             currentAction.targetImages.Add(newImage);
@@ -153,6 +182,7 @@ public class NewTargeting : MonoBehaviour
             }
         }
     }
+
 
 
     public void CreateCancelButton(Action action)
@@ -222,7 +252,15 @@ public class NewTargeting : MonoBehaviour
             // If the client is the master client, store the chosen actions in masterClientActions
             masterClientActions = chosenActions;
 
+            // Set masterClientConfirmed to true
+            masterClientConfirmed = true;
+
             Debug.Log("I am the master client, so I don't need to send the action list.");
+        }
+
+        if (masterClientConfirmed && otherPlayerConfirmed)
+        {
+            // Start your FightCalc script here, passing in masterClientActions and otherPlayerActions
         }
     }
 
@@ -305,9 +343,19 @@ public class NewTargeting : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             otherPlayerActions = receivedActions;
+
+            // Set otherPlayerConfirmed to true
+            otherPlayerConfirmed = true;
         }
 
-        Debug.Log("I've reeceivedd actionlist from enemy (non-master client)");
+        Debug.Log("I've received an action list from the other player (non-master client).");
+
+
+        // If both players have confirmed their actions, start the FightCalc script
+        if (masterClientConfirmed && otherPlayerConfirmed)
+        {
+            // Start your FightCalc script here, passing in masterClientActions and otherPlayerActions
+        }
     }
 
 

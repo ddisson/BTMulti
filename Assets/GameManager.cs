@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.IO;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
@@ -20,7 +21,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public Targeting targeting;
 
-
+    public Button[] player1AttackButtons;
+    public Button[] player1DefendButtons;
+    public Button[] player2AttackButtons;
+    public Button[] player2DefendButtons;
 
     void Awake()
     {
@@ -64,13 +68,38 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             if (clientID == 1)
             {
+                //Debug.Log("Setting player 1 on client with ID: " + clientID);
+                //BattleSet.instance.SetPlayer1(player1Prefab, playerPosition);
+                //// Access the NewTargeting singleton instance
+                //NewTargeting newTargeting = NewTargeting.instance;
+                //newTargeting.playerTitan = BattleSet.instance.playerTitan;
+                //newTargeting.Initialize(player1AttackButtons, player1DefendButtons);
+
                 Debug.Log("Setting player 1 on client with ID: " + clientID);
-                BattleSet.instance.SetPlayer1(player1Prefab, playerPosition);
+                Titan playerTitan = BattleSet.instance.SetPlayer1(player1Prefab, playerPosition);
+                Debug.Log(playerTitan + "HI I 'm here man before targeting!1");
+                // Access the NewTargeting singleton instance
+                NewTargeting newTargeting = NewTargeting.instance;
+                newTargeting.playerTitan = playerTitan;
+                Debug.Log(playerTitan + "HI I 'm here man! after1");
+                newTargeting.Initialize(player1AttackButtons, player1DefendButtons);
+
             }
             else if (clientID == 2)
             {
+                //Debug.Log("Setting player 2 on client with ID: " + clientID);
+                //BattleSet.instance.SetPlayer2(player2Prefab, enemyPosition);
+                //NewTargeting newTargeting = NewTargeting.instance;
+                //newTargeting.playerTitan = BattleSet.instance.enemyTitan;
+                //newTargeting.Initialize(player2AttackButtons, player2DefendButtons);
+
                 Debug.Log("Setting player 2 on client with ID: " + clientID);
-                BattleSet.instance.SetPlayer2(player2Prefab, enemyPosition);
+                Titan enemyTitan = BattleSet.instance.SetPlayer2(player2Prefab, enemyPosition);
+                Debug.Log(enemyTitan + "HI I 'm here man before targeting!");
+                NewTargeting newTargeting = NewTargeting.instance;
+                newTargeting.playerTitan = enemyTitan;
+                Debug.Log(enemyTitan + "HI I 'm here man! after");
+                newTargeting.Initialize(player2AttackButtons, player2DefendButtons);
 
             }
 
@@ -106,11 +135,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         if (clientID == 1)
         {
+            Debug.Log("I'm on overiding cliendid 1");
             BattleSet.instance.playerHud.UpdateHud(BattleSet.instance.playerTitan);
             BattleSet.instance.enemyHud.UpdateHud(BattleSet.instance.enemyTitan);
+
         }
         else if (clientID == 2)
         {
+            Debug.Log("I'm on overiding cliendid 2");
             BattleSet.instance.enemyHud.UpdateHud(BattleSet.instance.enemyTitan);
             BattleSet.instance.playerHud.UpdateHud(BattleSet.instance.playerTitan);
         }

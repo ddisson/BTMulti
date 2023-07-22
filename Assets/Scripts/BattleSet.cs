@@ -77,9 +77,9 @@ public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
         //SetPlayer();
     }
 
-    public void SetPlayer1(GameObject playerPrefab, Transform titanPosition)
+    public Titan SetPlayer1(GameObject playerPrefab, Transform titanPosition)
     {
-        Debug.Log("Titan is set, preparing to set a HUD");
+        Debug.Log("Titan 1 is set, preparing to set a HUD");
         GameObject playerGO;
         playerGO = PhotonNetwork.Instantiate(playerPrefab.name, titanPosition.position, titanPosition.rotation);
         playerTitan = playerGO.GetComponent<Titan>();
@@ -87,25 +87,33 @@ public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
         playerHud.SetHud(playerTitan);
         SetSkills(playerTitan);
         playerTitan.SetStats();
+        Debug.Log("exiting the SetPlayer1 script");
+        return playerTitan;
     }
 
-    public void SetPlayer2(GameObject playerPrefab, Transform titanPosition)
+    public Titan SetPlayer2(GameObject playerPrefab, Transform titanPosition)
     {
-        Debug.Log("Titan is set, preparing to set a HUD");
+        Debug.Log("Titan 2 is set, preparing to set a HUD");
         GameObject enemyGO;
         enemyGO = PhotonNetwork.Instantiate(playerPrefab.name, titanPosition.position, titanPosition.rotation);
         enemyTitan = enemyGO.GetComponent<Titan>();
-        // Set the HUDs
+        Debug.Log("pre Hud titan 2");
         enemyHud.SetHud(enemyTitan);
+        Debug.Log("hud set, setting skills 2");
         SetSkills(enemyTitan);
+        Debug.Log("skills set, setting stats 2");
         enemyTitan.SetStats();
-        playerHud.UpdateHud(playerTitan);
+        //playerHud.UpdateHud(playerTitan);
+        Debug.Log("exiting the SetPlayer2 script");
+        return enemyTitan;
+
     }
 
 
 
     private void SetSkills(Titan titan)
     {
+        Debug.Log("begin to set skills");
         for (int i = 0; i < skillButtons.Length; i++)
         {
             if (titan.skills[i] != null)
@@ -114,6 +122,7 @@ public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
                 skillImg.sprite = titan.skills[i].skillIcon;
             }
         }
+        Debug.Log("finish to set skills");
     }
 
     public void OnEvent(EventData photonEvent)
