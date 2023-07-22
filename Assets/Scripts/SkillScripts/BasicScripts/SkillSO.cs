@@ -16,9 +16,10 @@ public enum SkillClass
     Paladin
 }
 
-//[CreateAssetMenu(fileName = "New skill", menuName = "Skill")]
+[CreateAssetMenu(fileName = "New skill", menuName = "Skill")]
 public class SkillSO : ScriptableObject
 {
+    public int skillID;
     public string skillName;
     public SkillClass skillClass;
     public string description;

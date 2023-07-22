@@ -7,8 +7,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 
-public enum BattleState { BattleSet, NewRound, ActionPhase, EnemyTurn, FightPhase, RoundResult, Win, Lost }
-public enum BodyPart { Head, Torso, RightHand, LeftHand, Legs }
+//public enum BattleState { BattleSet, NewRound, ActionPhase, EnemyTurn, FightPhase, RoundResult, Win, Lost }
+//public enum BodyPart { Head, Torso, RightHand, LeftHand, Legs }
 
 
 
@@ -17,7 +17,7 @@ public class BattleSystem : MonoBehaviour
 
     //public PhotonView photonView;
 
-    public BattleState state;
+   // public BattleState state;
 
     [SerializeField] public GameObject playerPrefab;
 
@@ -123,7 +123,6 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         NewRoundBegins();
-
     }
 
 
@@ -131,19 +130,7 @@ public class BattleSystem : MonoBehaviour
     private void NewRoundBegins()
     {
         battleConsole.text = "Choose your actions, Titan!";
-
-        //UpdateSkillCD();
-
         ResetAPCounter();
-
-        //ShowDummies
-
-        //StartRoundTimer
-
-        //APCounterGUI.SetActive(true);
-        //confirmBtn.SetActive(true);
-        //APCounterText.text = currentAP.ToString();
-  
     }
 
     private void ResetAPCounter()
@@ -158,20 +145,7 @@ public class BattleSystem : MonoBehaviour
         //put clicked skill on a timely variable
         selectedSkill = playerTitan.skills[index];
 
-        if (selectedSkill.APCost <= APCurrent)
-        {
-            if (selectedSkill.skillType == SkillType.Attacking)
-            {
-                //LightEnemyDummy();
-                //
-            }
-            else if (selectedSkill.skillType == SkillType.Blocking)
-            {
-                //LightPlayerDummy();
-            }
-
-            CreateAction(index);
-        }
+        CreateAction(index);
 
     }
 
@@ -273,9 +247,6 @@ public class BattleSystem : MonoBehaviour
         
         chosenSkillAPCostList.RemoveAt(actionIndex);
 
-        //Destroy(actionButtons[actionIndex].GetComponent<Button>());
-        //actionButtons.RemoveAt(actionIndex);
-
 
         //and re-sort
         foreach (var action in actionList)
@@ -285,12 +256,6 @@ public class BattleSystem : MonoBehaviour
                 action.actionIndex -= 1;
             }
         }
-        //for (int i = deletedIndex + 1; i < actionButtons.Count; i++)
-        //{
-        //    actionButtons[i] = actionButtons[i - 1];
-        //}
-
-        //make all other skillButton unclickable and enable targeting mode
         DisableTargeting();
 
     }
@@ -399,19 +364,6 @@ public class BattleSystem : MonoBehaviour
         image.sprite = selectedSkill.skillIcon;
     }
 
-    //test Update script to destroy Images of selected skill
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            //Destroy Images from Dummy. here index [0] for example
-            foreach (var image in actionList[0].targetImages)
-            {
-                    Destroy(image);
-            }
-
-        }
-    }
 
     public void OnConfirmBtn()
     {
@@ -433,7 +385,7 @@ public class BattleSystem : MonoBehaviour
         }
         Debug.Log(attackList.Count);
         //Create enemy actions (test mode)
-        EnemyActions();
+        //EnemyActions();
         StartCoroutine("Pause");
         Debug.Log("Let the fight begin");
         Fight();
@@ -442,52 +394,10 @@ public class BattleSystem : MonoBehaviour
 
     private void Fight()
     {
-        UseGlobalEffects();
         PlayerAttack();
-        EnemyAttacks();
 
     }
 
-    private void EnemyAttacks() // refactor this to one method wit playerattack
-    {
-        while (enemyAttackList.Any())
-        {
-            Action action = new Action();
-            BodyPart target = new BodyPart();
-
-            action = enemyAttackList[0];
-            enemyAttackList.RemoveAt(0);
-
-            for (int i = 0; i < action.targets.Count; i++)
-            {
-                //reset blocked bool
-                blocked = false;
-
-                //we take first target of Attack
-                target = action.targets[i];
-
-                //ckeck if it is blocked (we search for same target in block list of enemy)
-                foreach (var playerActions in blockList)
-                {
-                    if (playerActions.targets.Contains(target)) //if we find
-                    {
-                        blocked = true; // we mark that
-                        Debug.Log("Blocked by player");
-                        //play that skill
-                        //add block formula
-                        //add damage as modifier
-                        //block event
-
-                    }
-
-                }
-                if (!blocked) // if no block then that means we do all damage
-                {
-                    Debug.Log("No block detected, I m enemy and Ive just attacked!!!!");
-                }
-            }
-        }
-    }
 
     private void PlayerAttack()
     {
@@ -538,23 +448,6 @@ public class BattleSystem : MonoBehaviour
         //find first atacking skill, put in on timely var currentAction and remove from the list (so not to find it again
 
         Debug.Log("NO more attack actions left!");
-    }
-
-    private void UseGlobalEffects()
-    {
-        //player  globals
-        foreach (var action in actionList)
-        {
-            action.skill.EffectOnGlobal();
-            Debug.Log("player eefct on global skill" + action.skill.skillName);
-        }
-
-        //enemy  globals
-        foreach (var actiond in enemyActionList)
-        {
-            actiond.skill.EffectOnGlobal();
-            Debug.Log("enemy eefct on global skill" + actiond.skill.skillName);
-        }
     }
 
     IEnumerator Pause()

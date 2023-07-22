@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369163c500c1e4771905f478fad2df17, type: 3}
   m_Name: Basic Attack
   m_EditorClassIdentifier: 
+  skillID: 1
   skillName: Basic Attack
   skillClass: 0
   description: 

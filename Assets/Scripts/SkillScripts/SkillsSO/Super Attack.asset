@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369163c500c1e4771905f478fad2df17, type: 3}
   m_Name: Super Attack
   m_EditorClassIdentifier: 
+  skillID: 7
   skillName: Super Attack
+  skillClass: 0
+  description: 
   skillIcon: {fileID: 21300000, guid: 0d91dc8f4e5764894b50d55b680a2838, type: 3}
   skillType: 0
   APCost: 2
-  damage: 30
+  cd: 0
+  numberOfTargets: 0
+  leveleRequirements: 0
+  damageModifier: 0

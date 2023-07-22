@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80dcd890f90124419beda651a34c2762, type: 3}
   m_Name: Block Debuff
   m_EditorClassIdentifier: 
+  skillID: 3
   skillName: 
   skillClass: 0
   description: 

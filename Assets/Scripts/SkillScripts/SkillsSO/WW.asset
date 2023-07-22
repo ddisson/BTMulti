@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd382bda5f2ff4ac481d09fe590ba127, type: 3}
   m_Name: WW
   m_EditorClassIdentifier: 
+  skillID: 8
   skillName: 
   skillClass: 1
   description: Whirls and does massive damage

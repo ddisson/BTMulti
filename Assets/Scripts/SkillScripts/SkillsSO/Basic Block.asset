@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d280e30bf49b47fc9124326468b9f52, type: 3}
   m_Name: Basic Block
   m_EditorClassIdentifier: 
+  skillID: 2
   skillName: Basic Block
   skillClass: 0
   description: 

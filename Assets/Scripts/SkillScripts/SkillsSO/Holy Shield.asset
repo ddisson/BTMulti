@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59729914d59cb4f94bf8592cbac28078, type: 3}
   m_Name: Holy Shield
   m_EditorClassIdentifier: 
+  skillID: 4
   skillName: 
   skillClass: 0
   description: 

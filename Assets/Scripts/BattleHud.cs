@@ -7,6 +7,8 @@ using Photon.Pun;
 
 public class BattleHud : MonoBehaviourPun
 {
+    public static BattleHud instance = null;
+
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] Slider hpSlider;
     [SerializeField] TextMeshProUGUI hpText;
@@ -14,8 +16,11 @@ public class BattleHud : MonoBehaviourPun
     public void SetHud(Titan titan)
     {
         nameText.text = titan.titanName;
+        Debug.Log(titan.titanName);
         hpSlider.maxValue = titan.maxHP;
+        Debug.Log(titan.maxHP);
         hpSlider.value = titan.currentHP;
+        Debug.Log(titan.currentHP);
         hpText.text = titan.currentHP.ToString();
 
         photonView.RPC("SyncHudAcrossNetwork", RpcTarget.Others, titan.titanName, titan.maxHP, titan.currentHP);
