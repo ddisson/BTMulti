@@ -38,7 +38,7 @@ public class SkillSO : ScriptableObject
 
     public virtual void EffectOnCast()
     {
-        return;
+        Debug.Log("basic  effect on all");
     }
 
     public virtual void EffectPassive()
@@ -53,12 +53,12 @@ public class SkillSO : ScriptableObject
 
     public virtual void EffectOnBlock()
     {
-        Debug.Log("basic class block");
+        Debug.Log("basic class block effect on block");
     }
 
     public virtual void EffectOnAttack()
     {
-        Debug.Log("basic class attack");
+        Debug.Log("basic class attack effect on attack");
     }
 
 

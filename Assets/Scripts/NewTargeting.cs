@@ -13,6 +13,8 @@ public class SerializableAction
     public List<int> targets = new List<int>();
 }
 
+public enum BodyPart { Head, Torso, RightHand, LeftHand, Legs }
+
 public class NewTargeting : MonoBehaviour
 {
     public static NewTargeting instance;
@@ -28,6 +30,10 @@ public class NewTargeting : MonoBehaviour
     public Button[] defendBodyPartButtons;
     public GameObject cancelButtonPrefab;
     public Transform cancelButtonParent;
+
+    // Variables to hold glowing outline effects for buttons
+    private Outline[] attackButtonOutlines;
+    private Outline[] defendButtonOutlines;
 
     public Button confirmButton;
     private bool masterClientConfirmed = false;
@@ -69,7 +75,18 @@ public class NewTargeting : MonoBehaviour
         masterClientActions = new List<Action>();
         otherPlayerActions = new List<Action>();
 
-        FightCalc fightCalc = GetComponent<FightCalc>();  // Assuming FightCalc is on the same GameObject
+
+        fightCalc = GetComponent<FightCalc>();
+
+        if (fightCalc != null)
+        {
+            Debug.Log("FightCalc has been successfully attached.");
+            fightCalc.test();
+        }
+        else
+        {
+            Debug.LogError("FightCalc is not attached.");
+        }
 
 
     }
@@ -78,6 +95,48 @@ public class NewTargeting : MonoBehaviour
     {
         this.attackBodyPartButtons = attackBodyPartButtons;
         this.defendBodyPartButtons = defendBodyPartButtons;
+
+        attackButtonOutlines = InitializeButtonOutlines(attackBodyPartButtons);
+        defendButtonOutlines = InitializeButtonOutlines(defendBodyPartButtons);
+
+        // Disable and hide all buttons at the start
+        EnableAndShowButtons(attackBodyPartButtons, false);
+        EnableAndShowButtons(defendBodyPartButtons, false);
+    }
+
+    private void EnableAndShowButtons(Button[] buttons, bool enable)
+    {
+        foreach (Button button in buttons)
+        {
+            button.enabled = enable;
+            button.gameObject.SetActive(enable);
+        }
+    }
+
+    private Outline[] InitializeButtonOutlines(Button[] buttons)
+    {
+        Outline[] outlines = new Outline[buttons.Length];
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Outline outline = buttons[i].GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = buttons[i].gameObject.AddComponent<Outline>();
+                outline.effectColor = Color.cyan; // Color for glow effect
+                outline.effectDistance = new Vector2(5, 5); // Distance for glow effect
+            }
+            outlines[i] = outline;
+            outline.enabled = false; // Disable glow by default
+        }
+        return outlines;
+    }
+
+    private void SetButtonGlow(Outline[] outlines, bool enable)
+    {
+        foreach (Outline outline in outlines)
+        {
+            outline.enabled = enable;
+        }
     }
 
     void Update()
@@ -111,19 +170,32 @@ public class NewTargeting : MonoBehaviour
         }
 
 
+
     }
 
 
     public void ChooseSkill(SkillSO chosenSkill)
     {
         currentSkill = chosenSkill;
-        Debug.Log("SkillButtoncheck");
-
         currentAction = new Action();
         currentAction.skill = currentSkill;
-        currentAction.targetsNeeded = currentSkill.numberOfTargets;  // new field indicating how many targets are needed
+        currentAction.targetsNeeded = currentSkill.numberOfTargets;
 
         chosenActions.Add(currentAction);
+
+        // Determine if the skill is attacking or blocking and enable corresponding buttons
+        if (currentSkill.skillType == SkillType.Attacking)
+        {
+            currentAction.actionType = ActionType.Attack;
+            EnableAndShowButtons(attackBodyPartButtons, true);
+            SetButtonGlow(attackButtonOutlines, true);
+        }
+        else if (currentSkill.skillType == SkillType.Blocking)
+        {
+            currentAction.actionType = ActionType.Block;
+            EnableAndShowButtons(defendBodyPartButtons, true);
+            SetButtonGlow(defendButtonOutlines, true);
+        }
     }
 
     public void ChooseBodyPart(BodyPart target, ActionType actionType)
@@ -179,6 +251,12 @@ public class NewTargeting : MonoBehaviour
             if (currentAction.targets.Count == currentSkill.numberOfTargets)
             {
                 CreateCancelButton(currentAction);
+
+                // Disable glow when all targets are chosen
+                if (actionType == ActionType.Attack)
+                    SetButtonGlow(attackButtonOutlines, false);
+                else // ActionType.Block
+                    SetButtonGlow(defendButtonOutlines, false);
             }
         }
     }
@@ -239,8 +317,15 @@ public class NewTargeting : MonoBehaviour
 
     private void OnConfirmButtonClicked()
     {
+        foreach (var action in chosenActions)
+        {
+            Debug.Log($"{action.actionType} Action with {action.skill.skillType} skill of the otherePlayer");
+        }
         // Convert chosenActions list to a format that can be sent over the network.
         var chosenActionsData = ConvertChosenActionsToData(chosenActions);
+
+        Debug.Log($"OnConfirmButtonClicked - Actions data: {chosenActionsData}");
+        // rest of your code
 
         if (!PhotonNetwork.IsMasterClient)
         {
@@ -260,8 +345,28 @@ public class NewTargeting : MonoBehaviour
 
         if (masterClientConfirmed && otherPlayerConfirmed)
         {
-            // Start your FightCalc script here, passing in masterClientActions and otherPlayerActions
+
+            Debug.Log("BothConfirmed");
+
+            if (otherPlayerActions.Count > 0)
+            {
+                Debug.Log($"First action skill name: {otherPlayerActions[0].skill.skillName}");
+            }
+            else
+            {
+                Debug.Log("No actions received");
+            }
+            {
+                Debug.Log($"In OnConfirmButtonClicked: {otherPlayerActions.Count} actions in otherPlayerActions");
+
+                fightCalc.StartBattleCalculation(masterClientActions, otherPlayerActions);
+            }
         }
+        else
+        {
+            Debug.Log("Only One playeer confirmed");
+        }
+
     }
 
 
@@ -318,8 +423,18 @@ public class NewTargeting : MonoBehaviour
     [PunRPC]
     public void ReceiveChosenActions(string chosenActionsJson)
     {
+        Debug.Log("ReceiveChosenActions called");
+        // rest of your code
+
+        Debug.Log($"ReceiveChosenActions called with data: {chosenActionsJson}");
+        // rest of your code
+
         // Deserialize the JSON data into a list of SerializableAction objects
-        List<SerializableAction> receivedSerializableActions = JsonUtility.FromJson<List<SerializableAction>>(chosenActionsJson);
+        //List<SerializableAction> receivedSerializableActions = JsonUtility.FromJson<List<SerializableAction>>(chosenActionsJson);
+
+        SerializableActionList receivedActionList = JsonUtility.FromJson<SerializableActionList>(chosenActionsJson);
+        List<SerializableAction> receivedSerializableActions = receivedActionList.actions;
+
 
         // Convert the received SerializableAction objects into Action objects
         List<Action> receivedActions = new List<Action>();
@@ -343,10 +458,38 @@ public class NewTargeting : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             otherPlayerActions = receivedActions;
+            foreach (var action in otherPlayerActions)
+            {
+                if (action.skill.skillType == SkillType.Attacking)
+                {
+                    action.actionType = ActionType.Attack;
+                }
+                else if (action.skill.skillType == SkillType.Blocking)
+                {
+                    action.actionType = ActionType.Block;
+                }
+                else
+                {
+                    Debug.Log("BUUUUUUUUUUG Wtih sjilltype");
+                }
+
+            }
+
+            // Log the number of actions received and the skill name of the first action
+            if (otherPlayerActions.Count > 0)
+            {
+                Debug.Log($"First action skill name: {otherPlayerActions[0].skill.skillName}");
+            }
+            else
+            {
+                Debug.Log("No actions received");
+            }
+            Debug.Log($"Received {otherPlayerActions.Count} actions. First action skill name: {otherPlayerActions[0].skill.skillName}");
 
             // Set otherPlayerConfirmed to true
             otherPlayerConfirmed = true;
         }
+
 
         Debug.Log("I've received an action list from the other player (non-master client).");
 
@@ -355,6 +498,21 @@ public class NewTargeting : MonoBehaviour
         if (masterClientConfirmed && otherPlayerConfirmed)
         {
             // Start your FightCalc script here, passing in masterClientActions and otherPlayerActions
+
+            Debug.Log("Im at receive meethod");
+            if (otherPlayerActions.Count > 0)
+            {
+                Debug.Log($"First action skill name: {otherPlayerActions[0].skill.skillName}");
+            }
+            else
+            {
+                Debug.Log("No actions received");
+            }
+            Debug.Log(masterClientActions[1].skill.skillName);
+            Debug.Log(otherPlayerActions[0].skill.skillName);
+            fightCalc.StartBattleCalculation(masterClientActions, otherPlayerActions);
+
+
         }
     }
 

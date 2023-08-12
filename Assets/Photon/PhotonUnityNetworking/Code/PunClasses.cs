@@ -420,6 +420,11 @@ namespace Photon.Pun
         public virtual void OnErrorInfo(ErrorInfo errorInfo)
         {
         }
+
+    //private void OnEnable()
+    //{
+    //    PhotonNetwork.AddCallbackTarget(this);
+    //}
     }
 
 

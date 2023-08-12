@@ -8,14 +8,14 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon; // For EventData
 
-public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
+public class BattleSet : MonoBehaviourPunCallbacks
 {
 
     private const byte player2JoinedEventCode = 0;
     private const byte requestHudUpdateEventCode = 1;
 
     public static BattleSet instance = null;
-    public new PhotonView photonView;
+ 
 
     public Transform enemyPosition;
     public Transform playerPosition;
@@ -29,11 +29,13 @@ public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
     public BattleHud playerHud;
     public BattleHud enemyHud;
 
+    TextMeshProUGUI battleconsole;
+
     [SerializeField] Button[] skillButtons;
 
     public static class EventCodes
     {
-        public const byte PlayerJoined = 0;
+        public const byte PlayerJoined = 1;
     }
 
 
@@ -125,30 +127,29 @@ public class BattleSet : MonoBehaviourPunCallbacks, IOnEventCallback
         Debug.Log("finish to set skills");
     }
 
-    public void OnEvent(EventData photonEvent)
-    {
-        StartCoroutine(OnEventCoroutine(photonEvent));
-    }
+    //public override void OnEnable()
+    //{
+    //    PhotonNetwork.AddCallbackTarget(this);
+    //    base.OnEnable();
+    //}
 
-    private IEnumerator OnEventCoroutine(EventData photonEvent)
-    {
-        byte eventCode = photonEvent.Code;
+    //public override void OnDisable()
+    //{
+    //    PhotonNetwork.RemoveCallbackTarget(this);
+    //    base.OnDisable();
+    //}
 
-        if (eventCode == EventCodes.PlayerJoined)
-        {
-            // Wait until the playerTitan object is not null
-            yield return new WaitUntil(() => playerTitan != null);
+    //public void OnEvent(EventData photonEvent)
+    //{
+    //    if (photonEvent.Code == battleConsole.instance.BattleConsoleEventCode)
+    //    {
+    //        object[] data = (object[])photonEvent.CustomData;
+    //        string line = (string)data[0];
+    //        consoleText.text += "\n" + line;
+    //    }
+    //}
 
-            if (GameManager.instance.clientID == 1)
-            {
-                playerHud.UpdateHud(playerTitan);
-            }
-            else
-            {
-                enemyHud.UpdateHud(enemyTitan);
-            }
-        }
-    }
+
 
 }
 

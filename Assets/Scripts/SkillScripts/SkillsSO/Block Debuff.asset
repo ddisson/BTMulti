@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Block Debuff
   m_EditorClassIdentifier: 
   skillID: 3
-  skillName: 
-  skillClass: 0
+  skillName: Block Debuff
+  skillClass: 2
   description: 
   skillIcon: {fileID: 0}
   skillType: 0
-  APCost: 0
-  cd: 0
-  numberOfTargets: 0
+  APCost: 1
+  cd: 1
+  numberOfTargets: 2
   leveleRequirements: 0

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 
-public enum BodyPart { Head, Torso, RightHand, LeftHand, Legs }
+//public enum BodyPart { Head, Torso, RightHand, LeftHand, Legs }
 
 public class Targeting : MonoBehaviour
 {

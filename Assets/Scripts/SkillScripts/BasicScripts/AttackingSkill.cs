@@ -18,19 +18,19 @@ public class AttackingSkill : SkillSO
 
     public override void EffectOnGlobal()
     {
-        Debug.Log("Attacking skill effect on choose");
+        Debug.Log("Attacking skill basic effect on choose");
 
     }
 
     public override void EffectOnCast()
     {
-        Debug.Log("Attacking skill effect on cast");
+        Debug.Log("Attacking skill basic effect on cast");
 
     }
 
     public override void EffectOnAttack()
     {
-        Debug.Log("Attacking skill effect on attack");
+        Debug.Log("Attacking skill basic effect on attack");
     }
 
     //public float GetDamage()

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Holy Shield
   m_EditorClassIdentifier: 
   skillID: 4
-  skillName: 
-  skillClass: 0
+  skillName: Holy Shield
+  skillClass: 2
   description: 
   skillIcon: {fileID: 0}
-  skillType: 0
+  skillType: 2
   APCost: 0
   cd: 0
   numberOfTargets: 0

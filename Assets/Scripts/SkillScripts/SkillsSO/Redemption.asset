@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: 6
   skillName: 
-  skillClass: 0
+  skillClass: 2
   description: 
   skillIcon: {fileID: 0}
-  skillType: 0
+  skillType: 2
   APCost: 0
   cd: 0
   numberOfTargets: 0

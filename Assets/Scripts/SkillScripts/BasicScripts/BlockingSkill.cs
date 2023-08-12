@@ -11,19 +11,19 @@ public class BlockingSkill : SkillSO
 
     public override void EffectOnGlobal()
     {
-        Debug.Log("block skill effect on choose");
+        Debug.Log("basic block skill effect on choose");
 
     }
 
     public override void EffectOnCast()
     {
-        Debug.Log("block skill effect on cast");
+        Debug.Log("basic block skill effect on cast");
 
     }
 
     public override void EffectOnBlock()
     {
-        Debug.Log("Block skill effect on block");
+        Debug.Log("basic Block skill effect on block");
     }
 
 }
